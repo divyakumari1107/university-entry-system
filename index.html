@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>University Gate Entry System | Live Interactive Cloud Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+      --border-color: #334155;
+      --accent: #22c55e;
+      --accent-hover: #16a34a;
+    }
+    body {
+      background-color: var(--bg-dark);
+      color: #f1f5f9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+    }
+    .navbar {
+      background: rgba(30, 41, 59, 0.95);
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(8px);
+    }
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+    }
+    .badge-gate {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #022c22;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .table-dark-custom {
+      background-color: #020617;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #1f2937;
+    }
+    .table-dark-custom table {
+      margin-bottom: 0;
+      color: #e5e7eb;
+    }
+    .table-dark-custom th {
+      background-color: #0b1120;
+      color: #9ca3af;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-color: #1f2937;
+      padding: 12px 14px;
+    }
+    .table-dark-custom td {
+      border-color: #111827;
+      padding: 12px 14px;
+      vertical-align: middle;
+      font-size: 13.5px;
+    }
+    .code-font {
+      font-family: "Courier New", Courier, monospace;
+    }
+    .phone-mockup {
+      background: #020617;
+      border: 3px solid #334155;
+      border-radius: 28px;
+      padding: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      max-width: 320px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="#">
+        <i class="bi bi-shield-check text-success fs-4"></i>
+        <span>University Gate Entry System</span>
+      </a>
+      <div class="d-flex align-items-center gap-3">
+        <span class="badge-gate"><i class="bi bi-broadcast me-1"></i>Gate Active</span>
+        <a href="https://github.com/divyakumari1107/university-entry-system" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-3">
+          <i class="bi bi-github me-1"></i>Source Code
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container-fluid px-4 py-4">
+    <!-- Top Stats -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-3">
+        <div class="card p-3">
+          <div class="text-secondary text-xs text-uppercase fw-semibold">Total Registered Students</div>
+          <div class="fs-3 fw-bold text-white mt-1" id="statStudents">4</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card p-3">
+          <div class="text-secondary text-xs text-uppercase fw-semibold">Today's Verified Entries</div>
+          <div class="fs-3 fw-bold text-success mt-1" id="statApproved">12</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card p-3">
+          <div class="text-secondary text-xs text-uppercase fw-semibold">Rejected Access Attempts</div>
+          <div class="fs-3 fw-bold text-danger mt-1" id="statDenied">1</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card p-3">
+          <div class="text-secondary text-xs text-uppercase fw-semibold">Database Persistence</div>
+          <div class="fs-3 fw-bold text-info mt-1">H2 In-Memory</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Left Column: Security Guard Gate Monitor -->
+      <div class="col-lg-8">
+        <div class="card p-4 h-100">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-0"><i class="bi bi-display me-2 text-primary"></i>Security Guard Monitor (Live Gate Terminal)</h5>
+              <small class="text-muted">Real-time scan logs updating automatically via WebSocket / Polling</small>
+            </div>
+            <button class="btn btn-sm btn-outline-success rounded-pill px-3" onclick="simulateNewScan()">
+              <i class="bi bi-qr-code-scan me-1"></i>Simulate QR Scan
+            </button>
+          </div>
+
+          <div class="table-dark-custom">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Reg Number</th>
+                  <th>Phone</th>
+                  <th>Scan Time</th>
+                  <th>Verification</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="scanLogsBody">
+                <!-- Dynamically Populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Mobile Student QR Simulator -->
+      <div class="col-lg-4">
+        <div class="card p-4 text-center">
+          <h5 class="fw-bold mb-1"><i class="bi bi-phone me-2 text-info"></i>Student Phone Scanner</h5>
+          <p class="text-muted text-xs mb-3">Simulates what the student sees on their phone when scanning the campus gate QR.</p>
+
+          <div class="phone-mockup text-center">
+            <div class="text-xs text-muted mb-2"><i class="bi bi-wifi me-1"></i>Campus Wi-Fi Connected</div>
+            <div id="phoneViewNormal">
+              <div class="p-3 bg-dark rounded-3 border border-secondary mb-3">
+                <i class="bi bi-qr-code fs-1 text-success"></i>
+                <div class="fw-bold mt-2 text-white" id="phoneStudentName">Divya Kumari</div>
+                <div class="text-xs text-muted code-font" id="phoneStudentReg">12215891</div>
+              </div>
+              <p class="text-xs text-muted mb-3">Confirm gate entry permission at North Main Gate.</p>
+              <div class="d-grid gap-2">
+                <button class="btn btn-success btn-sm rounded-pill py-2 fw-semibold" onclick="phoneConfirmEntry(true)">
+                  <i class="bi bi-check-circle me-1"></i>Confirm Entry
+                </button>
+                <button class="btn btn-outline-danger btn-sm rounded-pill py-1 text-xs" onclick="phoneConfirmEntry(false)">
+                  Deny
+                </button>
+              </div>
+            </div>
+
+            <div id="phoneViewResult" style="display:none;" class="py-4">
+              <div id="phoneResultIcon"></div>
+              <h6 class="fw-bold mt-3" id="phoneResultTitle">Entry Approved</h6>
+              <p class="text-xs text-muted" id="phoneResultMsg">Welcome to Campus!</p>
+              <button class="btn btn-sm btn-outline-secondary rounded-pill mt-3 text-xs" onclick="resetPhoneView()">
+                Reset Phone
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-top border-secondary text-start text-xs text-muted">
+            <div class="fw-bold text-white mb-1"><i class="bi bi-gear-wide-connected me-1"></i>Spring Boot Architecture:</div>
+            • <code>GateController</code> endpoints: <code>/gate/confirm</code>, <code>/students</code><br>
+            • H2 In-Memory Database with Spring Data JPA repository<br>
+            • DevOps Containerization via multi-stage Docker & Kubernetes.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let logs = [
+      { name: "Divya Kumari", reg: "12215891", phone: "+91 98765 43210", time: "Just now", status: "VERIFIED" },
+      { name: "Rahul Sharma", reg: "12214302", phone: "+91 98123 45678", time: "2 mins ago", status: "VERIFIED" },
+      { name: "Aarav Patel", reg: "12219904", phone: "+91 97234 56789", time: "10 mins ago", status: "DENIED" },
+      { name: "Priya Singh", reg: "12216543", phone: "+91 96345 67890", time: "25 mins ago", status: "VERIFIED" }
+    ];
+
+    function renderLogs() {
+      const tbody = document.getElementById("scanLogsBody");
+      tbody.innerHTML = logs.map((l, idx) => `
+        <tr>
+          <td class="fw-bold text-white">${l.name}</td>
+          <td class="code-font text-info">${l.reg}</td>
+          <td class="code-font text-muted">${l.phone}</td>
+          <td class="text-warning text-xs">${l.time}</td>
+          <td>
+            <span class="badge ${l.status === 'VERIFIED' ? 'bg-success-subtle text-success border border-success' : 'bg-danger-subtle text-danger border border-danger'} text-2xs px-2 py-1 rounded-pill">
+              ${l.status}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-outline-secondary btn-sm py-0 px-2 text-2xs rounded" onclick="removeLog(${idx})">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function simulateNewScan() {
+      const dummyStudents = [
+        { name: "Simran Kaur", reg: "12218840", phone: "+91 95432 10987" },
+        { name: "Ananya Roy", reg: "12217732", phone: "+91 94321 09876" },
+        { name: "Vikram Malhotra", reg: "12213349", phone: "+91 93210 98765" }
+      ];
+      const pick = dummyStudents[Math.floor(Math.random() * dummyStudents.length)];
+      const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      logs.unshift({ name: pick.name, reg: pick.reg, phone: pick.phone, time: now, status: "VERIFIED" });
+      
+      let count = parseInt(document.getElementById("statApproved").innerText);
+      document.getElementById("statApproved").innerText = count + 1;
+      renderLogs();
+    }
+
+    function removeLog(idx) {
+      logs.splice(idx, 1);
+      renderLogs();
+    }
+
+    function phoneConfirmEntry(isApproved) {
+      document.getElementById("phoneViewNormal").style.display = "none";
+      const resView = document.getElementById("phoneViewResult");
+      resView.style.display = "block";
+
+      const icon = document.getElementById("phoneResultIcon");
+      const title = document.getElementById("phoneResultTitle");
+      const msg = document.getElementById("phoneResultMsg");
+
+      if (isApproved) {
+        icon.innerHTML = '<i class="bi bi-check-circle-fill text-success fs-1"></i>';
+        title.innerText = "Entry Approved";
+        title.className = "fw-bold mt-3 text-success";
+        msg.innerText = "Gate access granted. Welcome to Campus!";
+        simulateNewScan();
+      } else {
+        icon.innerHTML = '<i class="bi bi-x-circle-fill text-danger fs-1"></i>';
+        title.innerText = "Entry Denied";
+        title.className = "fw-bold mt-3 text-danger";
+        msg.innerText = "Access declined by student/security.";
+        let count = parseInt(document.getElementById("statDenied").innerText);
+        document.getElementById("statDenied").innerText = count + 1;
+      }
+    }
+
+    function resetPhoneView() {
+      document.getElementById("phoneViewResult").style.display = "none";
+      document.getElementById("phoneViewNormal").style.display = "block";
+    }
+
+    renderLogs();
+  </script>
+</body>
+</html>

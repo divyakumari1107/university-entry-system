@@ -1,6 +1,26 @@
 # University Gate Entry System 🏛️
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-success?style=for-the-badge&logo=github)](https://divyakumari1107.github.io/university-entry-system/)
+[![Vercel Deployment](https://img.shields.io/badge/Deployed-Vercel-black.svg?logo=vercel)](https://university-entry-system.vercel.app/)
+[![Java](https://img.shields.io/badge/Java-17-orange.svg)](pom.xml)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.4-brightgreen.svg)](pom.xml)
+[![DevOps](https://img.shields.io/badge/DevOps-Docker%20%7C%20Kubernetes%20%7C%20Jenkins-blue.svg)](Jenkinsfile)
+[![Database](https://img.shields.io/badge/Database-H2%20In--Memory-yellow.svg)](src/main/resources/application.properties)
+
 A real-time QR-based university gate entry system built with Spring Boot, featuring a complete DevOps pipeline.
+
+---
+
+## 🌐 Live Production Deployments
+
+This project includes a live interactive gate security dashboard and student mobile QR confirmation simulator:
+
+| Resource | Live Link | Status |
+| :--- | :--- | :--- |
+| **University Gate Live Terminal (GitHub Pages)** | **[https://divyakumari1107.github.io/university-entry-system/](https://divyakumari1107.github.io/university-entry-system/)** | 🟢 **Live (24/7)** |
+| **University Gate Live Mirror (Vercel)** | **[https://university-entry-system.vercel.app/](https://university-entry-system.vercel.app/)** | 🟢 **Production Ready** |
+
+---
 
 ## 🚀 Features
 
